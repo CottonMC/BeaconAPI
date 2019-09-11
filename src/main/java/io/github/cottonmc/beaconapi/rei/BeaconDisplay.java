@@ -10,11 +10,19 @@ import java.util.List;
 
 public class BeaconDisplay implements RecipeDisplay {
 	private Identifier id;
+	private int page;
 	private List<ItemStack> inputs;
+	private List<ItemStack> allInputs;
 
-	public BeaconDisplay(Identifier id, List<ItemStack> inputs) {
+	public BeaconDisplay(Identifier id, int page, List<ItemStack> inputs, List<ItemStack> allInputs) {
 		this.id = id;
+		this.page = page;
 		this.inputs = inputs;
+		this.allInputs = allInputs;
+	}
+
+	public int getPage() {
+		return page;
 	}
 
 	@Override
@@ -30,5 +38,10 @@ public class BeaconDisplay implements RecipeDisplay {
 	@Override
 	public Identifier getRecipeCategory() {
 		return id;
+	}
+
+	@Override
+	public List<List<ItemStack>> getRequiredItems() {
+		return Collections.singletonList(allInputs);
 	}
 }

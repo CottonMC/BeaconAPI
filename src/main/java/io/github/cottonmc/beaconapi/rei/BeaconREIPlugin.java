@@ -7,7 +7,13 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.VersionParsingException;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class BeaconREIPlugin implements REIPluginV0 {
@@ -32,7 +38,23 @@ public class BeaconREIPlugin implements REIPluginV0 {
 
 	@Override
 	public void registerRecipeDisplays(RecipeHelper helper) {
-		helper.registerDisplay(BASE, new BeaconDisplay(BASE, BeaconTags.getBaseStacks()));
-		helper.registerDisplay(ACTIVATOR, new BeaconDisplay(ACTIVATOR, BeaconTags.getActivatorStacks()));
+		addBeaconDisplay(helper, BASE, BeaconTags.getBaseStacks());
+		addBeaconDisplay(helper, ACTIVATOR, BeaconTags.getActivatorStacks());
+	}
+
+	private static void addBeaconDisplay(RecipeHelper helper, Identifier id, List<ItemStack> stacks) {
+		for (int i = 0; i < stacks.size(); i += MathHelper.clamp(48, 1, stacks.size() - i)) {
+			List<ItemStack> thisStacks = new ArrayList<>();
+			for (int j = i; j < i + 48; j++)
+				if (j < stacks.size())
+					thisStacks.add(stacks.get(j));
+			helper.registerDisplay(id, new BeaconDisplay(id, MathHelper.floor(i / 48f), thisStacks, stacks));
+		}
+	}
+
+	@Override
+	public void registerOthers(RecipeHelper helper) {
+		helper.registerAutoCraftButtonArea(BASE, bounds -> null);
+		helper.registerAutoCraftButtonArea(ACTIVATOR, bounds -> null);
 	}
 }
