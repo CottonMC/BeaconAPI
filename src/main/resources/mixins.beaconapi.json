@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "io.github.cottonmc.beaconapi.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinBeaconBlockEntity",
+    "MixinBeaconContainer"
+  ],
+  "client": [
+    "MixinBeaconContainerSlotPayment",
+    "MixinBeaconScreen"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "beaconapi",
+  "version": "$version",
+
+  "name": "Beacon API",
+  "icon": "assets/beaconapi/icon.png",
+
+  "description": "Support for alternate blocks and items in beacon bases and inputs.",
+  "licence": "MIT",
+  "contact": {
+    "sources": "https://github.com/CottonMC/BeaconAPI"
+  },
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.cottonmc.beaconapi.api.BeaconTags"
+    ]
+  },
+  "mixins": [
+    "mixins.beaconapi.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.4.0"
+  },
+  "custom": {
+    "modmenu:api": true
+  }
+}
