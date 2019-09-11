@@ -1,7 +1,7 @@
 package io.github.cottonmc.beaconapi.mixin;
 
 import io.github.cottonmc.beaconapi.api.BeaconTags;
-import io.github.cottonmc.beaconapi.api.BeaconBlocks;
+import io.github.cottonmc.beaconapi.api.BeaconBlockHolder;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.block.Block;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BeaconBlockEntity.class)
-public abstract class MixinBeaconBlockEntity extends BlockEntity implements BeaconBlocks {
+public abstract class MixinBeaconBlockEntity extends BlockEntity implements BeaconBlockHolder {
 	private Object2IntMap<Block> beaconBlocks = new Object2IntArrayMap<>();
 
 	public MixinBeaconBlockEntity(BlockEntityType<?> type) {
