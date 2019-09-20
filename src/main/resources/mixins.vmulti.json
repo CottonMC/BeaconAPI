@@ -5,6 +5,7 @@
   "mixins": [
     "MixinBeaconBlockEntity",
     "MixinBeaconContainer",
+    "MixinConduitBlockEntity",
     "MixinEnchantingTableContainer"
   ],
   "client": [
