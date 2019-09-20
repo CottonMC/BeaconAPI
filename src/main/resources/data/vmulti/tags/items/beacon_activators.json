@@ -4,7 +4,6 @@
     "minecraft:iron_ingot",
     "minecraft:gold_ingot",
     "minecraft:diamond",
-    "minecraft:emerald",
-    "minecraft:prismarine_shard"
+    "minecraft:emerald"
   ]
 }
