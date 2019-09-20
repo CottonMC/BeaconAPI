@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -35,12 +34,7 @@ public class MixinConduitBlockEntity implements ComponentCollector {
 		activators.clear();
 	}
 
-//	@ModifyVariable(method = "updateActivatingBlocks", at = @At(value = "FIELD", target = "Lnet/minecraft/block/entity/ConduitBlockEntity;ACTIVATING_BLOCKS:[L;"))
-//	private Block[] replaceActivators(Block[] original) {
-//		return VMultiAPI.CONDUIT_ACTIVATORS.values().toArray(new Block[]{});
-//	}
-
-	@Inject(method = "updateActivatingBlocks", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+	@Inject(method = "updateActivatingBlocks", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, remap = false)
 	private void addActivators(CallbackInfoReturnable<Boolean> cir, int x, int y, int z, BlockPos newPos, BlockState state) {
 		if (VMultiAPI.ENCHANTMENT_BOOSTERS.contains(state.getBlock())) {
 			int currentCount = activators.getOrDefault(state.getBlock(), 0);
