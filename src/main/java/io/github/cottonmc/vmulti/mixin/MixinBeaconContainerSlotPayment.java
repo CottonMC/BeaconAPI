@@ -1,8 +1,6 @@
-package io.github.cottonmc.beaconapi.mixin;
+package io.github.cottonmc.vmulti.mixin;
 
-import io.github.cottonmc.beaconapi.api.BeaconTags;
-import io.github.cottonmc.beaconapi.impl.BeaconInventory;
-import net.minecraft.container.BeaconContainer;
+import io.github.cottonmc.vmulti.api.VMultiAPI;
 import net.minecraft.container.Slot;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -20,6 +18,6 @@ public abstract class MixinBeaconContainerSlotPayment extends Slot {
 
 	@Inject(method = "canInsert", at = @At("HEAD"), cancellable = true)
 	private void taggableInsertSlot(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (BeaconTags.BEACON_ACTIVATORS.contains(stack.getItem())) cir.setReturnValue(true);
+		if (VMultiAPI.BEACON_ACTIVATORS.contains(stack.getItem())) cir.setReturnValue(true);
 	}
 }

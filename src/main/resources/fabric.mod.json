@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "beaconapi",
+  "id": "vmulti",
   "version": "$version",
 
-  "name": "Beacon API",
+  "name": "Vanilla Multiblock API",
   "icon": "assets/beaconapi/icon.png",
 
-  "description": "Support for alternate blocks and items in beacon bases and inputs.",
+  "description": "Tag support for various vanilla multi0block contructs.",
   "licence": "MIT",
   "contact": {
     "sources": "https://github.com/CottonMC/BeaconAPI"
@@ -14,14 +14,14 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.cottonmc.beaconapi.api.BeaconTags"
+      "io.github.cottonmc.vmulti.api.VMultiAPI"
     ],
     "rei_plugins_v0": [
-      "io.github.cottonmc.beaconapi.rei.BeaconREIPlugin"
+      "io.github.cottonmc.vmulti.rei.VMultiREIPlugin"
     ]
   },
   "mixins": [
-    "mixins.beaconapi.json"
+    "mixins.vmulti.json"
   ],
   "depends": {
     "fabricloader": ">=0.4.0"

@@ -1,12 +1,8 @@
-package io.github.cottonmc.beaconapi.impl;
+package io.github.cottonmc.vmulti.impl;
 
-import io.github.cottonmc.beaconapi.api.BeaconTags;
-import net.fabricmc.fabric.api.tag.TagRegistry;
+import io.github.cottonmc.vmulti.api.VMultiAPI;
 import net.minecraft.inventory.BasicInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tag.Tag;
-import net.minecraft.util.Identifier;
 
 public class BeaconInventory extends BasicInventory {
 
@@ -15,7 +11,7 @@ public class BeaconInventory extends BasicInventory {
 	}
 
 	public boolean isValidInvStack(int slot, ItemStack stack) {
-		return BeaconTags.BEACON_ACTIVATORS.contains(stack.getItem());
+		return VMultiAPI.BEACON_ACTIVATORS.contains(stack.getItem());
 	}
 
 	public int getInvMaxStackAmount() {

@@ -1,6 +1,7 @@
-package io.github.cottonmc.beaconapi.rei;
+package io.github.cottonmc.vmulti.rei;
 
 import me.shedaniel.rei.api.RecipeDisplay;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
@@ -8,13 +9,15 @@ import net.minecraft.util.Identifier;
 import java.util.Collections;
 import java.util.List;
 
-public class BeaconDisplay implements RecipeDisplay {
+public class VMultiDisplay implements RecipeDisplay {
+	private Item icon;
 	private Identifier id;
 	private int page;
 	private List<ItemStack> inputs;
 	private List<ItemStack> allInputs;
 
-	public BeaconDisplay(Identifier id, int page, List<ItemStack> inputs, List<ItemStack> allInputs) {
+	public VMultiDisplay(Item icon, Identifier id, int page, List<ItemStack> inputs, List<ItemStack> allInputs) {
+		this.icon = icon;
 		this.id = id;
 		this.page = page;
 		this.inputs = inputs;
@@ -32,7 +35,7 @@ public class BeaconDisplay implements RecipeDisplay {
 
 	@Override
 	public List<ItemStack> getOutput() {
-		return Collections.singletonList(new ItemStack(Items.BEACON));
+		return Collections.singletonList(new ItemStack(icon));
 	}
 
 	@Override

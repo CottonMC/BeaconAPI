@@ -1,4 +1,4 @@
-package io.github.cottonmc.beaconapi.rei;
+package io.github.cottonmc.vmulti.rei;
 
 import com.google.common.collect.Lists;
 import me.shedaniel.math.api.Point;
@@ -13,6 +13,7 @@ import me.shedaniel.rei.plugin.DefaultPlugin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
@@ -22,10 +23,12 @@ import java.util.function.Supplier;
 
 import static com.mojang.blaze3d.platform.GlStateManager.color4f;
 
-public class BeaconCategory implements RecipeCategory<BeaconDisplay> {
+public class VMultiCategory implements RecipeCategory<VMultiDisplay> {
+	private Item icon;
 	private Identifier id;
 
-	public BeaconCategory(Identifier id) {
+	public VMultiCategory(Item icon, Identifier id) {
+		this.icon = icon;
 		this.id = id;
 	}
 
@@ -36,7 +39,7 @@ public class BeaconCategory implements RecipeCategory<BeaconDisplay> {
 
 	@Override
 	public Renderer getIcon() {
-		return Renderer.fromItemStack(new ItemStack(Items.BEACON));
+		return Renderer.fromItemStack(new ItemStack(icon));
 	}
 
 	@Override
@@ -45,7 +48,7 @@ public class BeaconCategory implements RecipeCategory<BeaconDisplay> {
 	}
 
 	@Override
-	public RecipeRenderer getSimpleRenderer(BeaconDisplay display) {
+	public RecipeRenderer getSimpleRenderer(VMultiDisplay display) {
 		return new RecipeRenderer() {
 			@Override
 			public int getHeight() {
@@ -54,13 +57,13 @@ public class BeaconCategory implements RecipeCategory<BeaconDisplay> {
 
 			@Override
 			public void render(int x, int y, double mouseX, double mouseY, float delta) {
-				MinecraftClient.getInstance().textRenderer.draw(I18n.translate("text.beaconapi.display.page", display.getPage() + 1), x + 5, y + 6, -1);
+				MinecraftClient.getInstance().textRenderer.draw(I18n.translate("text.vmulti.display.page", display.getPage() + 1), x + 5, y + 6, -1);
 			}
 		};
 	}
 
 	@Override
-	public List<Widget> setupDisplay(Supplier<BeaconDisplay> recipeDisplaySupplier, Rectangle bounds) {
+	public List<Widget> setupDisplay(Supplier<VMultiDisplay> recipeDisplaySupplier, Rectangle bounds) {
 		List<Widget> widgets = Lists.newArrayList();
 		Point startingPoint = new Point(bounds.x + bounds.width - 55, bounds.y + 110);
 		widgets.add(new RecipeBaseWidget(bounds) {

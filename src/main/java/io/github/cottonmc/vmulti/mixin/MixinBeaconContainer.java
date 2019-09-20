@@ -1,6 +1,6 @@
-package io.github.cottonmc.beaconapi.mixin;
+package io.github.cottonmc.vmulti.mixin;
 
-import io.github.cottonmc.beaconapi.impl.BeaconInventory;
+import io.github.cottonmc.vmulti.impl.BeaconInventory;
 import net.minecraft.container.BeaconContainer;
 import net.minecraft.container.Container;
 import net.minecraft.container.ContainerType;

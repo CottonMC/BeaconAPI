@@ -28,7 +28,7 @@ if(rootProject.file('private.gradle').exists()) { //Publishing details
 	apply from: 'private.gradle'
 }
 
-archivesBaseName = "beaconapi"
+archivesBaseName = "vmulti"
 group = "io.github.cottonmc"
 version = "1.0.0+1.14.4"
 
