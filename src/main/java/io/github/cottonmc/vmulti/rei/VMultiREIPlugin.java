@@ -55,7 +55,7 @@ public class VMultiREIPlugin implements REIPluginV0 {
 			for (int j = i; j < i + 48; j++)
 				if (j < stacks.size())
 					thisStacks.add(stacks.get(j));
-			helper.registerDisplay(id, new VMultiDisplay(icon, id, MathHelper.floor(i / 48f), thisStacks, stacks));
+			helper.registerDisplay(id, new VMultiDisplay(id, MathHelper.floor(i / 48f), thisStacks, new ItemStack[]{new ItemStack(icon)}));
 		}
 	}
 

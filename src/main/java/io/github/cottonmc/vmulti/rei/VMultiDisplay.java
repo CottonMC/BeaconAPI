@@ -1,27 +1,28 @@
 package io.github.cottonmc.vmulti.rei;
 
+import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeDisplay;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VMultiDisplay implements RecipeDisplay {
-	private Item icon;
 	private Identifier id;
+	private List<EntryStack> order, allItems;
+	private List<EntryStack> output;
 	private int page;
-	private List<ItemStack> inputs;
-	private List<ItemStack> allInputs;
 
-	public VMultiDisplay(Item icon, Identifier id, int page, List<ItemStack> inputs, List<ItemStack> allInputs) {
-		this.icon = icon;
+	public VMultiDisplay(Identifier id, int page, List<ItemStack> order, ItemStack[] output) {
 		this.id = id;
 		this.page = page;
-		this.inputs = inputs;
-		this.allInputs = allInputs;
+		this.order = order.stream().map(EntryStack::create).collect(Collectors.toList());
+		this.output = Arrays.asList(output).stream().map(EntryStack::create).collect(Collectors.toList());
+		this.allItems = order.stream().map(EntryStack::create).collect(Collectors.toList());
 	}
 
 	public int getPage() {
@@ -29,13 +30,17 @@ public class VMultiDisplay implements RecipeDisplay {
 	}
 
 	@Override
-	public List<List<ItemStack>> getInput() {
-		return Collections.singletonList(inputs);
+	public List<List<EntryStack>> getInputEntries() {
+		List<List<EntryStack>> lists = new ArrayList<>();
+		for (EntryStack allItem : allItems) {
+			lists.add(Collections.singletonList(allItem));
+		}
+		return lists;
 	}
 
 	@Override
-	public List<ItemStack> getOutput() {
-		return Collections.singletonList(new ItemStack(icon));
+	public List<EntryStack> getOutputEntries() {
+		return output;
 	}
 
 	@Override
@@ -44,7 +49,11 @@ public class VMultiDisplay implements RecipeDisplay {
 	}
 
 	@Override
-	public List<List<ItemStack>> getRequiredItems() {
-		return Collections.singletonList(allInputs);
+	public List<List<EntryStack>> getRequiredEntries() {
+		return Collections.singletonList(allItems);
+	}
+
+	public List<EntryStack> getItemsByOrder() {
+		return order;
 	}
 }

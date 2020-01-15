@@ -3,25 +3,24 @@ package io.github.cottonmc.vmulti.rei;
 import com.google.common.collect.Lists;
 import me.shedaniel.math.api.Point;
 import me.shedaniel.math.api.Rectangle;
+import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeCategory;
-import me.shedaniel.rei.api.Renderer;
-import me.shedaniel.rei.gui.renderers.RecipeRenderer;
+import me.shedaniel.rei.gui.entries.RecipeEntry;
+import me.shedaniel.rei.gui.widget.EntryWidget;
+import me.shedaniel.rei.gui.widget.QueuedTooltip;
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget;
-import me.shedaniel.rei.gui.widget.SlotWidget;
 import me.shedaniel.rei.gui.widget.Widget;
 import me.shedaniel.rei.plugin.DefaultPlugin;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
+import javax.annotation.Nullable;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
-
-import static com.mojang.blaze3d.platform.GlStateManager.color4f;
 
 public class VMultiCategory implements RecipeCategory<VMultiDisplay> {
 	private Item icon;
@@ -38,8 +37,8 @@ public class VMultiCategory implements RecipeCategory<VMultiDisplay> {
 	}
 
 	@Override
-	public Renderer getIcon() {
-		return Renderer.fromItemStack(new ItemStack(icon));
+	public EntryStack getLogo() {
+		return EntryStack.create(new ItemStack(icon));
 	}
 
 	@Override
@@ -48,17 +47,22 @@ public class VMultiCategory implements RecipeCategory<VMultiDisplay> {
 	}
 
 	@Override
-	public RecipeRenderer getSimpleRenderer(VMultiDisplay display) {
-		return new RecipeRenderer() {
+	public RecipeEntry getSimpleRenderer(VMultiDisplay display) {
+		return new RecipeEntry() {
 			@Override
 			public int getHeight() {
 				return 10 + MinecraftClient.getInstance().textRenderer.fontHeight;
 			}
 
+			@Nullable
 			@Override
-			public void render(int x, int y, double mouseX, double mouseY, float delta) {
-				MinecraftClient.getInstance().textRenderer.draw(I18n.translate("text.vmulti.display.page", display.getPage() + 1), x + 5, y + 6, -1);
+			public QueuedTooltip getTooltip(int mouseX, int mouseY) {
+				return null;
 			}
+
+			@Override
+			public void render(Rectangle rectangle, int mouseX, int mouseY, float delta) {
+				MinecraftClient.getInstance().textRenderer.draw(I18n.translate("text.rei.composting.page", display.getPage() + 1), rectangle.x + 5, rectangle.y + 6, -1);			}
 		};
 	}
 
@@ -69,20 +73,20 @@ public class VMultiCategory implements RecipeCategory<VMultiDisplay> {
 		widgets.add(new RecipeBaseWidget(bounds) {
 			@Override
 			public void render(int mouseX, int mouseY, float partialTicks) {
-				color4f(1.0F, 1.0F, 1.0F, 1.0F);
-				GuiLighting.disable();
 				MinecraftClient.getInstance().getTextureManager().bindTexture(DefaultPlugin.getDisplayTexture());
 				this.blit(startingPoint.x, startingPoint.y, 28, 221, 55, 26);
 			}
 		});
-		List<ItemStack> stacks = recipeDisplaySupplier.get().getInput().get(0);
+		List<EntryStack> stacks = new LinkedList<>(recipeDisplaySupplier.get().getItemsByOrder());
 		int i = 0;
 		for (int y = 0; y < 6; y++)
 			for (int x = 0; x < 8; x++) {
-				widgets.add(new SlotWidget(bounds.getCenterX() - 72 + x * 18, bounds.y + y * 18, stacks.size() > i ? Renderer.fromItemStack(stacks.get(i)) : Renderer.empty(), true, true, true));
+				int finalI = i;
+				EntryStack entryStack = stacks.size() > i ? stacks.get(finalI) : EntryStack.empty();
+				widgets.add(EntryWidget.create(bounds.getCenterX() - 72 + x * 18, bounds.y + y * 18).entry(entryStack));
 				i++;
 			}
-		widgets.add(new SlotWidget(startingPoint.x + 34, startingPoint.y + 5, Renderer.fromItemStacks(recipeDisplaySupplier.get().getOutput()), false, true, true));
+		widgets.add(EntryWidget.create(startingPoint.x + 34, startingPoint.y + 5).entries(recipeDisplaySupplier.get().getOutputEntries()).noBackground());
 		return widgets;
 	}
 
