@@ -18,8 +18,9 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class VMultiREIPlugin implements REIPluginV0 {
-	public static final Identifier BEACON_BASE = new Identifier(VMultiAPI.MODID, "beacon_base");
-	public static final Identifier BEACON_ACTIVATOR = new Identifier(VMultiAPI.MODID, "beacon_activator");
+	//TODO: are these gonna go here or in REI?
+//	public static final Identifier BEACON_BASE = new Identifier(VMultiAPI.MODID, "beacon_base");
+//	public static final Identifier BEACON_ACTIVATOR = new Identifier(VMultiAPI.MODID, "beacon_activator");
 	public static final Identifier CONDUIT_ACTIVATOR = new Identifier(VMultiAPI.MODID, "conduit_activator");
 	public static final Identifier ENCHANTMENT_BOOSTER = new Identifier(VMultiAPI.MODID, "enchantment_booster");
 
@@ -35,16 +36,16 @@ public class VMultiREIPlugin implements REIPluginV0 {
 
 	@Override
 	public void registerPluginCategories(RecipeHelper helper) {
-		helper.registerCategory(new VMultiCategory(Items.BEACON, BEACON_BASE));
-		helper.registerCategory(new VMultiCategory(Items.BEACON, BEACON_ACTIVATOR));
+//		helper.registerCategory(new VMultiCategory(Items.BEACON, BEACON_BASE));
+//		helper.registerCategory(new VMultiCategory(Items.BEACON, BEACON_ACTIVATOR));
 		helper.registerCategory(new VMultiCategory(Items.CONDUIT, CONDUIT_ACTIVATOR));
 		helper.registerCategory(new VMultiCategory(Items.ENCHANTING_TABLE, ENCHANTMENT_BOOSTER));
 	}
 
 	@Override
 	public void registerRecipeDisplays(RecipeHelper helper) {
-		addMultiDisplay(helper, Items.BEACON, BEACON_BASE, VMultiAPI.getBeaconBaseStacks());
-		addMultiDisplay(helper, Items.BEACON, BEACON_ACTIVATOR, VMultiAPI.getBeaconActivatorStacks());
+//		addMultiDisplay(helper, Items.BEACON, BEACON_BASE, VMultiAPI.getBeaconBaseStacks());
+//		addMultiDisplay(helper, Items.BEACON, BEACON_ACTIVATOR, VMultiAPI.getBeaconActivatorStacks());
 		addMultiDisplay(helper, Items.CONDUIT, CONDUIT_ACTIVATOR, VMultiAPI.getConduitFrameStacks());
 		addMultiDisplay(helper, Items.ENCHANTING_TABLE, ENCHANTMENT_BOOSTER, VMultiAPI.getEnchantmentBoosterStacks());
 	}
@@ -61,8 +62,8 @@ public class VMultiREIPlugin implements REIPluginV0 {
 
 	@Override
 	public void registerOthers(RecipeHelper helper) {
-		helper.registerAutoCraftButtonArea(BEACON_BASE, bounds -> null);
-		helper.registerAutoCraftButtonArea(BEACON_ACTIVATOR, bounds -> null);
+//		helper.registerAutoCraftButtonArea(BEACON_BASE, bounds -> null);
+//		helper.registerAutoCraftButtonArea(BEACON_ACTIVATOR, bounds -> null);
 		helper.registerAutoCraftButtonArea(CONDUIT_ACTIVATOR, bounds -> null);
 		helper.registerAutoCraftButtonArea(ENCHANTMENT_BOOSTER, bounds -> null);
 	}

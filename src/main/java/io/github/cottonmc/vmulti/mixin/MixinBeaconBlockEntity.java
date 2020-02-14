@@ -1,19 +1,20 @@
 package io.github.cottonmc.vmulti.mixin;
 
-import io.github.cottonmc.vmulti.api.VMultiAPI;
 import io.github.cottonmc.vmulti.api.ComponentCollector;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(BeaconBlockEntity.class)
 public abstract class MixinBeaconBlockEntity extends BlockEntity implements ComponentCollector {
@@ -28,14 +29,12 @@ public abstract class MixinBeaconBlockEntity extends BlockEntity implements Comp
 		beaconBlocks.clear();
 	}
 
-	@ModifyVariable(method = "updateLevel", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/block/BlockState;getBlock()Lnet/minecraft/block/Block;"))
-	public Block getNewBlock(Block original) {
-		if (VMultiAPI.BEACON_BASES.contains(original)) {
-			int currentCount = beaconBlocks.getOrDefault(original, 0);
-			beaconBlocks.put(original, currentCount + 1);
-			return Blocks.IRON_BLOCK;
+	@Inject(method = "updateLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+	public void appendBeaconBlocks(int x, int y, int z, CallbackInfo info, int i, int j, boolean bl, int k, int l) {
+		BlockState state = world.getBlockState(new BlockPos(k, j, l));
+		if (state.matches(BlockTags.BEACON_BASE_BLOCKS)) {
+			beaconBlocks.put(state.getBlock(), beaconBlocks.getInt(state.getBlock()) + 1);
 		}
-		return Blocks.AIR;
 	}
 
 	@Override

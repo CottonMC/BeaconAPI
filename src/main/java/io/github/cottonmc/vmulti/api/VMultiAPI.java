@@ -6,6 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -16,28 +18,31 @@ import java.util.List;
 
 public class VMultiAPI implements ModInitializer {
 	public static final String MODID = "vmulti";
-
+	@Deprecated
 	private static final Item[] VANILLA_BEACON_BASES = new Item[] { Items.EMERALD_BLOCK, Items.DIAMOND_BLOCK, Items.GOLD_BLOCK, Items.IRON_BLOCK };
+	@Deprecated
 	private static final Item[] VANILLA_BEACON_ACTIVATORS = new Item[] { Items.EMERALD, Items.DIAMOND, Items.GOLD_INGOT, Items.IRON_INGOT };
 
 	private static final Item[] VANILLA_CONDUIT_ACTIVATORS = new Item[] { Items.PRISMARINE, Items.PRISMARINE_BRICKS, Items.SEA_LANTERN, Items.DARK_PRISMARINE };
 
+	@Deprecated
 	public static final Tag<Block> BEACON_BASES = TagRegistry.block(new Identifier(MODID, "beacon_bases"));
+	@Deprecated
 	public static final Tag<Item> BEACON_ACTIVATORS = TagRegistry.item(new Identifier(MODID, "beacon_activators"));
 
 	public static final Tag<Block> CONDUIT_ACTIVATORS = TagRegistry.block(new Identifier(MODID, "conduit_activators"));
 
 	public static final Tag<Block> ENCHANTMENT_BOOSTERS = TagRegistry.block(new Identifier(MODID, "enchantment_boosters"));
 
-
 	@Override
 	public void onInitialize() {
 		//TODO: add a data pack thing for choosing beacon effects?
 	}
 
+	@Deprecated
 	public static List<ItemStack> getBeaconBaseStacks() {
 		List<ItemStack> ret = new ArrayList<>();
-		List<Block> blockTag = new ArrayList<>(VMultiAPI.BEACON_BASES.values());
+		List<Block> blockTag = new ArrayList<>(BlockTags.BEACON_BASE_BLOCKS.values());
 		List<Item> tag = new ArrayList<>();
 		for (Block block : blockTag) {
 			Item item = block.asItem();
@@ -56,9 +61,10 @@ public class VMultiAPI implements ModInitializer {
 		return ret;
 	}
 
+	@Deprecated
 	public static List<ItemStack> getBeaconActivatorStacks() {
 		List<ItemStack> ret = new ArrayList<>();
-		List<Item> tag = new ArrayList<>(VMultiAPI.BEACON_ACTIVATORS.values());
+		List<Item> tag = new ArrayList<>(ItemTags.BEACON_PAYMENT_ITEMS.values());
 		for (Item activator : VANILLA_BEACON_ACTIVATORS) {
 			if (tag.contains(activator)) {
 				ret.add(new ItemStack(activator));
