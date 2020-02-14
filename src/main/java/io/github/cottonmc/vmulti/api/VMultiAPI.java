@@ -18,10 +18,9 @@ import java.util.List;
 
 public class VMultiAPI implements ModInitializer {
 	public static final String MODID = "vmulti";
-	@Deprecated
-	private static final Item[] VANILLA_BEACON_BASES = new Item[] { Items.EMERALD_BLOCK, Items.DIAMOND_BLOCK, Items.GOLD_BLOCK, Items.IRON_BLOCK };
-	@Deprecated
-	private static final Item[] VANILLA_BEACON_ACTIVATORS = new Item[] { Items.EMERALD, Items.DIAMOND, Items.GOLD_INGOT, Items.IRON_INGOT };
+
+	private static final Item[] VANILLA_BEACON_BASES = new Item[] { Items.NETHERITE_BLOCK, Items.EMERALD_BLOCK, Items.DIAMOND_BLOCK, Items.GOLD_BLOCK, Items.IRON_BLOCK };
+	private static final Item[] VANILLA_BEACON_ACTIVATORS = new Item[] { Items.NETHERITE_INGOT, Items.EMERALD, Items.DIAMOND, Items.GOLD_INGOT, Items.IRON_INGOT };
 
 	private static final Item[] VANILLA_CONDUIT_ACTIVATORS = new Item[] { Items.PRISMARINE, Items.PRISMARINE_BRICKS, Items.SEA_LANTERN, Items.DARK_PRISMARINE };
 
@@ -39,7 +38,6 @@ public class VMultiAPI implements ModInitializer {
 		//TODO: add a data pack thing for choosing beacon effects?
 	}
 
-	@Deprecated
 	public static List<ItemStack> getBeaconBaseStacks() {
 		List<ItemStack> ret = new ArrayList<>();
 		List<Block> blockTag = new ArrayList<>(BlockTags.BEACON_BASE_BLOCKS.values());
@@ -61,7 +59,6 @@ public class VMultiAPI implements ModInitializer {
 		return ret;
 	}
 
-	@Deprecated
 	public static List<ItemStack> getBeaconActivatorStacks() {
 		List<ItemStack> ret = new ArrayList<>();
 		List<Item> tag = new ArrayList<>(ItemTags.BEACON_PAYMENT_ITEMS.values());
