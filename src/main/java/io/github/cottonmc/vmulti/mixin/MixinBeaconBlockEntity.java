@@ -32,7 +32,7 @@ public abstract class MixinBeaconBlockEntity extends BlockEntity implements Comp
 	@Inject(method = "updateLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
 	public void appendBeaconBlocks(int x, int y, int z, CallbackInfo info, int i, int j, boolean bl, int k, int l) {
 		BlockState state = world.getBlockState(new BlockPos(k, j, l));
-		if (state.matches(BlockTags.BEACON_BASE_BLOCKS)) {
+		if (state.isIn(BlockTags.BEACON_BASE_BLOCKS)) {
 			beaconBlocks.put(state.getBlock(), beaconBlocks.getInt(state.getBlock()) + 1);
 		}
 	}

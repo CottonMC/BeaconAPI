@@ -2,10 +2,11 @@ package io.github.cottonmc.vmulti.mixin;
 
 import io.github.cottonmc.vmulti.api.VMultiAPI;
 import net.minecraft.client.gui.screen.ingame.BeaconScreen;
-import net.minecraft.client.gui.screen.ingame.ContainerScreen;
-import net.minecraft.container.BeaconContainer;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.BeaconScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,19 +15,19 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BeaconScreen.class)
-public abstract class MixinBeaconScreen extends ContainerScreen<BeaconContainer> {
+public abstract class MixinBeaconScreen extends HandledScreen<BeaconScreenHandler> {
 	private float time = 0F;
 
-	public MixinBeaconScreen(BeaconContainer container, PlayerInventory playerInv, Text name) {
+	public MixinBeaconScreen(BeaconScreenHandler container, PlayerInventory playerInv, Text name) {
 		super(container, playerInv, name);
 	}
 
 	@Inject(method = "drawBackground", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/ItemRenderer;renderGuiItem(Lnet/minecraft/item/ItemStack;II)V"), cancellable = true)
-	private void drawItems(float partialTicks, int x, int y, CallbackInfo ci) {
+	private void drawItems(MatrixStack matrices, float partialTicks, int x, int y, CallbackInfo ci) {
 		time += partialTicks;
 		ItemStack[] toDisplay = VMultiAPI.getBeaconActivatorStacks().toArray(new ItemStack[0]);
-		int drawX = ((this.width - this.containerWidth) / 2) + 20;
-		int drawY = ((this.height - this.containerHeight) / 2) + 109;
+		int drawX = ((this.width - this.backgroundWidth) / 2) + 20;
+		int drawY = ((this.height - this.backgroundHeight) / 2) + 109;
 		if (toDisplay.length <= 5) {
 			int offset = 0;
 			for (int i = 0; i < toDisplay.length; i++) {

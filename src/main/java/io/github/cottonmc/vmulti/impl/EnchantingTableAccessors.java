@@ -1,8 +1,8 @@
 package io.github.cottonmc.vmulti.impl;
 
-import net.minecraft.container.Property;
-import net.minecraft.enchantment.InfoEnchantment;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.Property;
 
 import java.util.List;
 import java.util.Random;
@@ -10,5 +10,5 @@ import java.util.Random;
 public interface EnchantingTableAccessors {
 	Random vmulti_getRandom();
 	Property vmulti_getSeed();
-	List<InfoEnchantment> vmulti_getEnchantments(ItemStack stack, int slot, int enchantingPower);
+	List<EnchantmentLevelEntry> vmulti_getEnchantments(ItemStack stack, int slot, int enchantingPower);
 }

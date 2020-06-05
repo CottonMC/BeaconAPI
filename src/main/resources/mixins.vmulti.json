@@ -3,8 +3,10 @@
   "package": "io.github.cottonmc.vmulti.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinBeaconBlockEntity",
     "MixinConduitBlockEntity",
-    "MixinEnchantingTableContainer"
+    "MixinEnchantingTableContainer",
+    "MixinEnchantingTableBlockEntity"
   ],
   "client": [
     "MixinBeaconScreen",

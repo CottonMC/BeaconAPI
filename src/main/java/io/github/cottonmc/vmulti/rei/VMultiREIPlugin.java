@@ -5,8 +5,6 @@ import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.SemanticVersion;
-import net.fabricmc.loader.util.version.VersionParsingException;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -23,11 +21,6 @@ public class VMultiREIPlugin implements REIPluginV0 {
 //	public static final Identifier BEACON_ACTIVATOR = new Identifier(VMultiAPI.MODID, "beacon_activator");
 	public static final Identifier CONDUIT_ACTIVATOR = new Identifier(VMultiAPI.MODID, "conduit_activator");
 	public static final Identifier ENCHANTMENT_BOOSTER = new Identifier(VMultiAPI.MODID, "enchantment_booster");
-
-	@Override
-	public SemanticVersion getMinimumVersion() throws VersionParsingException {
-		return SemanticVersion.parse("3.0-pre");
-	}
 
 	@Override
 	public Identifier getPluginIdentifier() {
